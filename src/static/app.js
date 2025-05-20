@@ -27,6 +27,35 @@ document.addEventListener("DOMContentLoaded", () => {
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
         `;
 
+        // Participants section (emails only)
+        const participantsSection = document.createElement("div");
+        participantsSection.className = "activity-participants";
+        const participantsHeader = document.createElement("h5");
+        participantsHeader.textContent = "Participants";
+        participantsSection.appendChild(participantsHeader);
+
+        if (details.participants && details.participants.length > 0) {
+          const ul = document.createElement("ul");
+          details.participants.forEach((participant) => {
+            const li = document.createElement("li");
+            // If participant is an object with email, show email; otherwise show as string
+            if (typeof participant === "object" && participant !== null && participant.email) {
+              li.textContent = participant.email;
+            } else {
+              li.textContent = participant;
+            }
+            ul.appendChild(li);
+          });
+          participantsSection.appendChild(ul);
+        } else {
+          const none = document.createElement("span");
+          none.style.color = "#888";
+          none.textContent = "No participants yet.";
+          participantsSection.appendChild(none);
+        }
+
+        activityCard.appendChild(participantsSection);
+
         activitiesList.appendChild(activityCard);
 
         // Add option to select dropdown
